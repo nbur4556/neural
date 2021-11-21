@@ -1,5 +1,6 @@
-function Neuron(weight = null) {
+function Neuron(nextLength = 0, weight = null) {
     this.weight = weight || (Math.random() * 2) - 1;
+    this.connections = new Array(nextLength).fill().map(() => (Math.random() * 2) - 1)
 }
 
 Neuron.prototype.outputSignal = function (input) {
