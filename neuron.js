@@ -3,11 +3,17 @@ function Neuron(args) {
     this.weight = args.weight || (Math.random() * 2) - 1;
     this.connections = args.connections || new Array(args.connectionCount || 0)
         .fill()
-        .map(() => Math.random())
+        .map(() => Math.random());
+
+    this.getId = function () { return this.id }
+    this.getWeight = function () { return this.weight }
+    this.setWeight = function (weight) { this.weight = weight }
+    this.getConnections = function () { return this.connections }
+    this.setConnections = function (connections) { this.connections = connections }
 }
 
-Neuron.prototype.getConnections = function () {
-    return this.connections;
+Neuron.prototype.mutateWeight = function (p) {
+    this.weight += Math.random() * (p * 2) - p;
 }
 
 // Generate weighted signal out between 1 and -1

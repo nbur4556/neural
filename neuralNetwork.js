@@ -40,9 +40,6 @@ NeuralNetwork.prototype.generateSchema = function () {
 
 // Send signals through each layer of the neural network and return signals out
 NeuralNetwork.prototype.sendSignals = function (inputs, layerIndex = 0) {
-    console.log('\nLAYER', layerIndex);
-    console.log(inputs);
-
     // Get signals out of each neuron in a layer
     const sigOuts = this.layers[layerIndex].map((neuron, i) => {
         const sigOuts = neuron.getOutputs(inputs[i]);
@@ -57,6 +54,17 @@ NeuralNetwork.prototype.sendSignals = function (inputs, layerIndex = 0) {
     // Reduce to single array sum of all signals in a layer
     const sigNext = sigOuts.reduce((pre, next) => pre.map((val, i) => val + next[i]));
     return this.sendSignals(sigNext, ++layerIndex);
+}
+
+NeuralNetwork.prototype.mutate = function () {
+    this.layers.forEach(layer => {
+        layer.forEach(neuron => {
+            console.log('\n')
+            console.log(`ID ${neuron.getId()}: ${neuron.getWeight()}`);
+            neuron.mutateWeight(0.1);
+            console.log(`ID ${neuron.getId()}: ${neuron.getWeight()}`);
+        });
+    });
 }
 
 //TODO: Method for modulating neurons in a network
