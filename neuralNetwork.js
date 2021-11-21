@@ -10,7 +10,6 @@ function NeuralNetwork(layerMap) {
 }
 
 NeuralNetwork.prototype.sendSignals = function (inputs, layerIndex = 0) {
-
     console.log('\nLAYER', layerIndex);
     console.log(inputs);
 
@@ -27,7 +26,12 @@ NeuralNetwork.prototype.sendSignals = function (inputs, layerIndex = 0) {
     if (layerIndex < this.layers.length - 1) {
         this.sendSignals(sigNext, ++layerIndex);
     }
+
+    //TODO: Return exact output layer signals
 }
+
+//TODO: Method for creating a copy of a neural network
+//TODO: Method for modulating neurons in a network
 
 // Return array of all neuron layers
 NeuralNetwork.prototype.getLayers = function () {

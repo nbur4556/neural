@@ -15,6 +15,9 @@ Neuron.prototype.getOutputs = function (input) {
     return sigOuts;
 }
 
+//TODO: Method for modulating neuron connection strengths
+//TODO: Method for modulating neuron weight
+
 module.exports = Neuron;
 
 // Squash a number between 1 and -1 on an S curve
