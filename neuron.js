@@ -12,8 +12,17 @@ function Neuron(args) {
     this.setConnections = function (connections) { this.connections = connections }
 }
 
+// Alter neuron weight by value between p and -p
 Neuron.prototype.mutateWeight = function (p) {
     this.weight += Math.random() * (p * 2) - p;
+}
+
+// Alter each neuron connection by value between p and -p
+Neuron.prototype.mutateConnections = function (p) {
+    this.connections = this.connections.map(connection => {
+        const mutation = Math.random() * (p * 2) - p;
+        return connection += mutation;
+    })
 }
 
 // Generate weighted signal out between 1 and -1
@@ -26,7 +35,6 @@ Neuron.prototype.getOutputs = function (input) {
         : sigmoidSquash(weightedOut);
 }
 
-//TODO: Method for modulating neuron connection strengths
 //TODO: Method for modulating neuron weight
 
 module.exports = Neuron;

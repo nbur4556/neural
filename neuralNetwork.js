@@ -59,14 +59,10 @@ NeuralNetwork.prototype.sendSignals = function (inputs, layerIndex = 0) {
 NeuralNetwork.prototype.mutate = function () {
     this.layers.forEach(layer => {
         layer.forEach(neuron => {
-            console.log('\n')
-            console.log(`ID ${neuron.getId()}: ${neuron.getWeight()}`);
             neuron.mutateWeight(0.1);
-            console.log(`ID ${neuron.getId()}: ${neuron.getWeight()}`);
+            neuron.mutateConnections(0.1);
         });
     });
 }
-
-//TODO: Method for modulating neurons in a network
 
 module.exports = NeuralNetwork;
