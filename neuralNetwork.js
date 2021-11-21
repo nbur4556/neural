@@ -1,13 +1,39 @@
 const Neuron = require('./neuron.js');
 
 // An array of neurons grouped into layers
-function NeuralNetwork(layerMap) {
-    this.layers = layerMap.map((length, i) => {
-        return new Array(length).fill().map(() => {
-            const neuron = new Neuron(layerMap[i + 1]);
-            return neuron;
-        });
-    });
+function NeuralNetwork(args) {
+    this.schema = args.layerSchema;
+    this.map = args.layerMap;
+
+    console.log(this.schema);
+    console.log(this.map);
+
+    // Generate layers from existing layer schema
+    this.generateFromSchema = function () {
+        console.log('generate from layer schema');
+    }
+
+    // Generate layers using a layer map
+    this.generateFromMap = function () {
+        return this.map.map((length, i) => {
+            return new Array(length).fill().map(() => {
+                const neuron = new Neuron(this.map[i + 1]);
+                return neuron;
+            });
+        })
+    }
+
+    this.layers = (this.map) ? this.generateFromMap() : generateFromSchema();
+}
+
+// Return object of all layers
+NeuralNetwork.prototype.getLayers = function () {
+    return this.layers;
+}
+
+// Return schema string of all layers
+NeuralNetwork.prototype.generateSchema = function () {
+    return JSON.stringify(this.layers);
 }
 
 // Send signals through each layer of the neural network and return signals out
@@ -31,14 +57,6 @@ NeuralNetwork.prototype.sendSignals = function (inputs, layerIndex = 0) {
     return this.sendSignals(sigNext, ++layerIndex);
 }
 
-//TODO: Method for creating a copy of a neural network
 //TODO: Method for modulating neurons in a network
-
-//TODO: Method for outputting / saving a neural network schema
-
-// Return array of all neuron layers
-NeuralNetwork.prototype.getLayers = function () {
-    return this.layers
-}
 
 module.exports = NeuralNetwork;
