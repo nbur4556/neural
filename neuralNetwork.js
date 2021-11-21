@@ -2,28 +2,25 @@ const Neuron = require('./neuron.js');
 
 // An array of neurons grouped into layers
 function NeuralNetwork(args) {
-    this.schema = args.layerSchema;
-    this.map = args.layerMap;
-
-    console.log(this.schema);
-    console.log(this.map);
+    this.schema = args.schema;
+    this.map = args.map;
 
     // Generate layers from existing layer schema
     this.generateFromSchema = function () {
-        console.log('generate from layer schema');
+        const schemaObj = JSON.parse(this.schema);
+        return schemaObj.map(layer => new Array(layer.length)
+            .fill()
+            .map((x, i) => new Neuron(layer[i].connections.length)));
     }
 
     // Generate layers using a layer map
     this.generateFromMap = function () {
-        return this.map.map((length, i) => {
-            return new Array(length).fill().map(() => {
-                const neuron = new Neuron(this.map[i + 1]);
-                return neuron;
-            });
-        })
+        return this.map.map((length, i) => new Array(length)
+            .fill()
+            .map(() => new Neuron(this.map[i + 1])))
     }
 
-    this.layers = (this.map) ? this.generateFromMap() : generateFromSchema();
+    this.layers = (this.map) ? this.generateFromMap() : this.generateFromSchema();
 }
 
 // Return object of all layers
