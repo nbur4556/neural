@@ -1,8 +1,14 @@
 function Neuron(nextLength = 0, weight = null) {
+    this.id = Math.random().toString().substr(2, 9);
     this.weight = weight || (Math.random() * 2) - 1;
-    this.connections = new Array(nextLength).fill().map(() => (Math.random() * 2) - 1)
+    this.connections = new Array(nextLength).fill().map(() => Math.random())
 }
 
+Neuron.prototype.getConnections = function () {
+    return this.connections;
+}
+
+// Generate weighted signal out between 1 and -1
 Neuron.prototype.outputSignal = function (input) {
     const output = input * this.weight;
     return sigmoidSquash(output);

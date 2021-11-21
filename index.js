@@ -1,4 +1,8 @@
 const NeuralNetwork = require('./neuralNetwork');
 
 const network = new NeuralNetwork([5, 2, 2, 3]);
-console.log(network.getLayers());
+const networkLayers = network.getLayers();
+
+console.log(networkLayers);
+
+network.handleInputs([1, 0, -1, 1, 0]);
