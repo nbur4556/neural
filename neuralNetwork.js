@@ -40,9 +40,6 @@ NeuralNetwork.prototype.generateSchema = function () {
 
 // Send signals through each layer of the neural network and return signals out
 NeuralNetwork.prototype.sendSignals = function (inputs, layerIndex = 0) {
-    console.log('\nLAYER', layerIndex);
-    console.log(inputs);
-
     // Get signals out of each neuron in a layer
     const sigOuts = this.layers[layerIndex].map((neuron, i) => {
         const sigOuts = neuron.getOutputs(inputs[i]);
@@ -59,6 +56,13 @@ NeuralNetwork.prototype.sendSignals = function (inputs, layerIndex = 0) {
     return this.sendSignals(sigNext, ++layerIndex);
 }
 
-//TODO: Method for modulating neurons in a network
+NeuralNetwork.prototype.mutate = function () {
+    this.layers.forEach(layer => {
+        layer.forEach(neuron => {
+            neuron.mutateWeight(0.1);
+            neuron.mutateConnections(0.1);
+        });
+    });
+}
 
 module.exports = NeuralNetwork;
