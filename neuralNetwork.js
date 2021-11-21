@@ -9,10 +9,19 @@ function NeuralNetwork(layerMap) {
     });
 }
 
-NeuralNetwork.prototype.handleInputs = function (inputs) {
-    this.layers[0].forEach((neuron, i) => {
-        console.log("sigIn:", inputs[i]);
-        console.log("sigOut:", neuron.outputSignal(inputs[i]));
+NeuralNetwork.prototype.sendSignals = function (inputs) {
+    this.layers.forEach((layer, i) => {
+        console.log('\nLAYER:', i);
+
+        // Get signals out for each neuron in layer
+        const sigNext = layer
+            .map((neuron, i) => {
+                const sigOuts = neuron.getOutputs(inputs[i]);
+                return sigOuts;
+            })
+            .reduce((pre, next) => pre.map((val, i) => val + next[i]));
+
+        console.log('SUM:', sigNext);
     });
 }
 

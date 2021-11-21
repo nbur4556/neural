@@ -9,9 +9,10 @@ Neuron.prototype.getConnections = function () {
 }
 
 // Generate weighted signal out between 1 and -1
-Neuron.prototype.outputSignal = function (input) {
-    const output = input * this.weight;
-    return sigmoidSquash(output);
+Neuron.prototype.getOutputs = function (input) {
+    const weightedOut = input * this.weight;
+    const sigOuts = this.connections.map(connection => sigmoidSquash(weightedOut * connection));
+    return sigOuts;
 }
 
 module.exports = Neuron;
