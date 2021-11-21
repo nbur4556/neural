@@ -7,7 +7,7 @@ Neuron.prototype.outputSignal = function (input) {
     return sigmoidSquash(output);
 }
 
-module.exports = Neuron; gi
+module.exports = Neuron;
 
 // Squash a number between 1 and -1 on an S curve
 const sigmoidSquash = (x, range = 2, slope = -2, offset = -1) => {
