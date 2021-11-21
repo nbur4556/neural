@@ -9,20 +9,24 @@ function NeuralNetwork(layerMap) {
     });
 }
 
-NeuralNetwork.prototype.sendSignals = function (inputs) {
-    this.layers.forEach((layer, i) => {
-        console.log('\nLAYER:', i);
+NeuralNetwork.prototype.sendSignals = function (inputs, layerIndex = 0) {
 
-        // Get signals out for each neuron in layer
-        const sigNext = layer
-            .map((neuron, i) => {
-                const sigOuts = neuron.getOutputs(inputs[i]);
-                return sigOuts;
-            })
-            .reduce((pre, next) => pre.map((val, i) => val + next[i]));
+    console.log('\nLAYER', layerIndex);
+    console.log(inputs);
 
-        console.log('SUM:', sigNext);
-    });
+    const sigNext = this.layers[layerIndex]
+        .map((neuron, i) => {
+            const sigOuts = neuron.getOutputs(inputs[i]);
+            return sigOuts;
+        })
+        // Reduce to sum of all signals in a layer
+        .reduce((pre, next) => pre.map((val, i) => val + next[i]));
+
+    console.log("NEXT INPUTS:", sigNext);
+
+    if (layerIndex < this.layers.length - 1) {
+        this.sendSignals(sigNext, ++layerIndex);
+    }
 }
 
 // Return array of all neuron layers
