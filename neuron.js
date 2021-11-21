@@ -1,7 +1,9 @@
-function Neuron(nextLength = 0, weight = null) {
+function Neuron(args) {
     this.id = Math.random().toString().substr(2, 9);
-    this.weight = weight || (Math.random() * 2) - 1;
-    this.connections = new Array(nextLength).fill().map(() => Math.random())
+    this.weight = args.weight || (Math.random() * 2) - 1;
+    this.connections = args.connections || new Array(args.connectionCount || 0)
+        .fill()
+        .map(() => Math.random())
 }
 
 Neuron.prototype.getConnections = function () {
