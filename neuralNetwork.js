@@ -10,14 +10,19 @@ function NeuralNetwork(args) {
         const schemaObj = JSON.parse(this.schema);
         return schemaObj.map(layer => new Array(layer.length)
             .fill()
-            .map((x, i) => new Neuron(layer[i].connections.length)));
+            .map((x, i) => new Neuron({
+                weight: layer[i].weight,
+                connections: layer[i].connections
+            })));
     }
 
     // Generate layers using a layer map
     this.generateFromMap = function () {
         return this.map.map((length, i) => new Array(length)
             .fill()
-            .map(() => new Neuron(this.map[i + 1])))
+            .map(() => new Neuron({
+                connectionCount: this.map[i + 1]
+            })));
     }
 
     this.layers = (this.map) ? this.generateFromMap() : this.generateFromSchema();
