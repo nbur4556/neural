@@ -1,0 +1,11 @@
+{
+  "name": "neural",
+  "version": "1.0.0",
+  "description": "neural network prototype",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "Nick Burt",
+  "license": "ISC"
+}
