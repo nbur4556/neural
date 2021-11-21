@@ -35,8 +35,6 @@ Neuron.prototype.getOutputs = function (input) {
         : sigmoidSquash(weightedOut);
 }
 
-//TODO: Method for modulating neuron weight
-
 module.exports = Neuron;
 
 // Squash a number between 1 and -1 on an S curve
