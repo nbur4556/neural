@@ -1,5 +1,6 @@
 const Neuron = require('./neuron.js');
 
+// An array of neurons grouped into layers
 function NeuralNetwork(layerMap) {
     this.layers = layerMap.map((length, i) => {
         return new Array(length).fill().map(() => {
@@ -9,29 +10,31 @@ function NeuralNetwork(layerMap) {
     });
 }
 
+// Send signals through each layer of the neural network and return signals out
 NeuralNetwork.prototype.sendSignals = function (inputs, layerIndex = 0) {
     console.log('\nLAYER', layerIndex);
     console.log(inputs);
 
-    const sigNext = this.layers[layerIndex]
-        .map((neuron, i) => {
-            const sigOuts = neuron.getOutputs(inputs[i]);
-            return sigOuts;
-        })
-        // Reduce to sum of all signals in a layer
-        .reduce((pre, next) => pre.map((val, i) => val + next[i]));
+    // Get signals out of each neuron in a layer
+    const sigOuts = this.layers[layerIndex].map((neuron, i) => {
+        const sigOuts = neuron.getOutputs(inputs[i]);
+        return sigOuts;
+    })
 
-    console.log("NEXT INPUTS:", sigNext);
-
-    if (layerIndex < this.layers.length - 1) {
-        this.sendSignals(sigNext, ++layerIndex);
+    // Return at output layer
+    if (layerIndex >= this.layers.length - 1) {
+        return sigOuts;
     }
 
-    //TODO: Return exact output layer signals
+    // Reduce to single array sum of all signals in a layer
+    const sigNext = sigOuts.reduce((pre, next) => pre.map((val, i) => val + next[i]));
+    return this.sendSignals(sigNext, ++layerIndex);
 }
 
 //TODO: Method for creating a copy of a neural network
 //TODO: Method for modulating neurons in a network
+
+//TODO: Method for outputting / saving a neural network schema
 
 // Return array of all neuron layers
 NeuralNetwork.prototype.getLayers = function () {
