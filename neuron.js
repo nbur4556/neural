@@ -11,8 +11,11 @@ Neuron.prototype.getConnections = function () {
 // Generate weighted signal out between 1 and -1
 Neuron.prototype.getOutputs = function (input) {
     const weightedOut = input * this.weight;
-    const sigOuts = this.connections.map(connection => sigmoidSquash(weightedOut * connection));
-    return sigOuts;
+
+    // If next connections is true, send output for each connection strength
+    return (this.connections.length > 0)
+        ? this.connections.map(connection => sigmoidSquash(weightedOut * connection))
+        : sigmoidSquash(weightedOut);
 }
 
 //TODO: Method for modulating neuron connection strengths
