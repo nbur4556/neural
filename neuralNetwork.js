@@ -4,6 +4,7 @@ const Neuron = require('./neuron.js');
 function NeuralNetwork(args) {
     this.schema = args.schema;
     this.map = args.map;
+    this.mutation = args.mutation || 0.1;
 
     // Generate layers from existing layer schema
     this.generateFromSchema = function () {
@@ -26,6 +27,14 @@ function NeuralNetwork(args) {
     }
 
     this.layers = (this.map) ? this.generateFromMap() : this.generateFromSchema();
+}
+
+NeuralNetwork.prototype.getMutation = function () {
+    return this.mutation;
+}
+
+NeuralNetwork.prototype.setMutation = function (mutation) {
+    this.mutation = mutation;
 }
 
 // Return object of all layers
@@ -59,8 +68,8 @@ NeuralNetwork.prototype.sendSignals = function (inputs, layerIndex = 0) {
 NeuralNetwork.prototype.mutate = function () {
     this.layers.forEach(layer => {
         layer.forEach(neuron => {
-            neuron.mutateWeight(0.1);
-            neuron.mutateConnections(0.1);
+            neuron.mutateWeight(this.mutation);
+            neuron.mutateConnections(this.mutation);
         });
     });
 }
